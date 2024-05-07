@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+  </head>
+  <body class="body-top">
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalScrollableTitle">Расчет стоимости тура</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" style="max-width: 600px;">
+              <form method="get" action="#" id="orderForm">
+                <div class="tour">
+                    <label class="label" for="name">
+                        Выберите тур:
+                    </label>
+                    <select id="inp1">
+
+                        <option value="Крым" selected>
+                            Крым
+                        </option>
+
+                        <option value="Кавказ" selected>
+                            Кавказ
+                        </option>
+
+                        <option value="Алтай" selected>
+                            Алтай
+                        </option>
+                    </select>
+                </div>
+                <div class="tour">
+                    <label class="label" for="Date">
+                        Выберите дату начала:
+                    </label>
+                    <input type="date" id="inp2">
+                </div>
+                <div class="tour">
+                    <label class="label" for="Number">
+                        Выберите колличество участников:
+                    </label>
+                    <select id="inp3">
+                        <option value="1">1</option>
+                        <option value="2" selected>2</option>
+                        <option value="3">3</option>
+                        <option value="3">4</option>
+                    </select>
+                </div>
+                <div class="tour">
+                    <label class="label" for="E-mail">
+                        Ваш E-mail:
+                    </label>
+                    <input type="email" id="inp4" class="input-xlarge" style="width: 350px;" required = "required">
+                </div>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn btn-primary" id="submit">Отправить</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <?php
+
+      session_start();
+
+      include('tpl/header.php');
+      include('tpl/nav.php');
+    ?>
+
+
+    <main class="flex">
+
+
+        
+
+        <div class="container-fluid">
+            <?php
+                include("dbconnect.php");
+
+                $label = 'id';
+                $id = false;
+                if (!empty($_GET[$label])) {
+                    $id = $_GET[$label];
+                    $div = '<div class="row"><div class="col">Актуальная информация о туре:</div></div>';
+                }
+                $result = $mysqli->query("SELECT * FROM tours WHERE id = '$id'");
+
+                $myrow = $result->fetch_assoc();
+
+                $div .= '<div class="row">';
+                $div .= '<div class="col"><div class="country">';
+                $id = $myrow['ID'];
+                $div .= '<img src= '.$myrow['photo'].'>';
+                $div .= '<p>'.$myrow['name'].'</p>';
+                $div .= '<p>'.$myrow['programm'].'</p>';
+                $div .= '</div></div>';
+                $div .= '</div>';
+
+                echo $div;
+            ?>
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+                Наши туры
+            </div>
+        </div>
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col">
+                    <div class="tour">
+                        <img src="img/crimea.jpg" class="tour_img">
+                        <p>
+                            Это прекрассная возможность отдохнуть всей семьей
+                        </p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            Рассчитать стоимость
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="tour">
+                        <img src="img/kavkaz.jpg" class="tour_img">
+                        <p>
+                            Море, солнце и горы!
+                        </p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            Рассчитать стоимость
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="tour">
+                        <img src="img/altay.jpg" class="tour_img">
+                        <p>
+                            Незабываемые впечатления!    
+                        </p>
+                        <button type="button" class="btn btn-primary" 
+                        data-toggle="modal" data-target="#myModal">
+                            Рассчитать стоимость
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <?php
+	    include('tpl/footer.php');
+    ?>
+
+    <script src="js/jquery-3.7.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    
+    <script>
+        console.log('работа')
+        $('#orderForm').on('submit', function ()
+        {
+            let tour = $("#inp1").val();
+            let date = new Date($("#inp2").val());
+            let month = date.getMonth();
+            let kol = $("#inp3").val();
+            kol = Number(kol);
+            let email = $("#inp4").val();
+            let stoim = 0;
+
+            console.log('работа111')
+
+            if (tour == 'Крым')
+            {
+                if((month == 5)||(month == 6)||(month == 7)||(month == 8))
+                    {stoim = kol*500;}
+                else {stoim = kol*300;}
+                console.log('Крым')
+            }
+
+            if (tour == 'Кавказ')
+            {
+                if((month == 12)|| (month == 1)|| (month == 2)|| (month == 5)|| (month == 6)|| (month == 7)|| (month == 8))
+                    {stoim = kol*300;}
+                else {stoim = kol*250;}
+                console.log('Кавказ')
+            }
+
+            if (tour == 'Алтай')
+            {
+                {stoim = kol*1000;}
+                console.log('Алтай')
+            }
+
+            alert (`Примерная стоимость вашего тура на ${kol} человек составит ${stoim} y.e. Мы свяжемся с ВАМИ!!`);
+            
+        }   
+        );
+    </script>
+
+  </body>
+</html>

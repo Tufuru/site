@@ -1,38 +1,37 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="CSS/style.css">
-        <meta http-equiv="Content-Type"
-        content="text/html; charset = utf-8">
-        <title>
-            Сайт туристической компании
-        </title>
-    </head>
-    <body>
-        
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+  </head>
+  <body class="body-top">
+    <header class="container">
+        <div class="row">
 
-        <div id="content">
-            <header>
-                <div id="logo">
-                    <img src="img/logo.jpg">
-                </div>
+            <div class="col-3">
+                <img id = 'logo' src="img/logo.jpg">
+            </div>
 
-                <h1>
-                    ПУТЕШЕСТВУЙ С НАМИ!
-                </h1>
-            </header>
-            <nav>
-                <a href="index.html">
-                    Главная страница
-                </a>
-                <a href="turs.html">
-                    Наши туры
-                </a>
-                <a href="contacts.html">
-                    О нас
-                </a>
-            </nav>
-            <div id="main">
+            <div class="col-9">
+                <h1>Путешествуйте с нами!</h1>
+            </div>
+        </div>
+    </header>
+    <div id="menu">
+        <nav class="nav nav-pills flex-column flex-sm-row">
+            <a class="flex-sm-fill text-sm-center nav-link" href="index.html">Главная</a>
+            <a class="flex-sm-fill text-sm-center nav-link" href="turs.html">Наши туры</a>
+            <a class="flex-sm-fill text-sm-center nav-link" href="contacts.html">О нас</a>
+        </nav>
+    </div>
+
+
+    <main class="flex">
+        <div class="row">
+            <div class="col">
                 <p>
                     Наш адрес: г. Белогорск, ул. Ракетная, 18.
                 </p>
@@ -66,9 +65,20 @@
                             </td>
                         </tr>
                     </table>
-            <footer>
-                Это сайт предназначенный для обучения
-            </footer>
+            </div>
         </div>
-    </body>
+    </main>
+
+
+    <footer class="footer">
+      <div class="row">
+        <div class="col">
+          Это сайт предназначенный для обучения
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/bootstrap.min.js" ></script>
+
+  </body>
 </html>
